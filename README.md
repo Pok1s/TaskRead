@@ -12,12 +12,23 @@ React (Vite) + ASP.NET Core Web API + Azure SQL Edge w Dockerze.
 
 ## Szybki start
 
-### 1. Baza (Docker)
+### Cały stack w Dockerze (baza + API + React)
 
 Z katalogu repozytorium:
 
 ```bash
-docker compose up -d
+docker compose up -d --build
+```
+
+- **Frontend (Vite):** http://localhost:5173  
+- **API:** http://localhost:5050/swagger  
+- **SQL Edge:** `localhost:1433`  
+
+Przeglądarka na komputerze łączy się z API przez `localhost:5050` (to jest port zmapowany z kontenera `api`).
+
+### 1. Logi bazy (opcjonalnie)
+
+```bash
 docker compose logs -f db
 ```
 
@@ -42,7 +53,9 @@ dotnet run
 
 Migracje EF: folder `Migrations/`; przy starcie: `Database.Migrate()`.
 
-### 3. Frontend
+### 3. Frontend (lokalnie, bez Dockera — alternatywa)
+
+Jeśli nie używasz serwisu `frontend` z Compose, możesz:
 
 ```bash
 cd frontend
@@ -50,7 +63,7 @@ npm install
 npm run dev
 ```
 
-Adres API: `frontend/.env` → `VITE_API_URL=http://localhost:5050` (zgodnie z `docker compose`).
+Adres API: `frontend/.env` → `VITE_API_URL=http://localhost:5050` (zgodnie z `docker compose`). Nie uruchamiaj jednocześnie Vite w Dockerze i `npm run dev` — konflikt portu **5173**.
 
 ### Test API z terminala (Artefakt 5.1 — zrzuty)
 
@@ -88,5 +101,5 @@ TaskRead/
 ├── scripts/verify-api.sh
 ├── artefakt05/Artefakt05_szablon.html
 ├── backend/CloudTasks.Api/
-└── frontend/
+└── frontend/                 # Dockerfile — Vite w Compose
 ```

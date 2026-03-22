@@ -15,11 +15,11 @@ services:
       - cloud-network
    
     healthcheck:
-      test: ["CMD-SHELL", "bash -c 'timeout 2 bash -c \"cat < /dev/null > /dev/tcp/127.0.0.1/1433\"' || exit 1"]
+      test: ["CMD-SHELL", "ps aux | grep -q '[s]qlservr' || exit 1"]
       interval: 10s
-      timeout: 8s
-      retries: 15
-      start_period: 60s
+      timeout: 5s
+      retries: 12
+      start_period: 90s
 
   api:
     build:
@@ -31,10 +31,26 @@ services:
       - "5050:8080"
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ConnectionStrings__DefaultConnection: "Server=db,1433;Database=CloudTasksDb;User Id=sa;Password=StrongPassword123!;TrustServerCertificate=True;"
+      # Encrypt=False — Microsoft.Data.SqlClient domyślnie Encrypt=True; między kontenerami często bez poprawnego certyfikatu TLS.
+      ConnectionStrings__DefaultConnection: "Server=db,1433;Database=CloudTasksDb;User Id=sa;Password=StrongPassword123!;TrustServerCertificate=True;Encrypt=False;Connect Timeout=60;"
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - cloud-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: cloud-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://localhost:5050
+    depends_on:
+      - api
     networks:
       - cloud-network
 

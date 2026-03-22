@@ -56,6 +56,7 @@ public class TasksController : ControllerBase
             IsCompleted = false,
             CreatedAt = DateTime.UtcNow
         };
+
         _context.Tasks.Add(entity);
         await _context.SaveChangesAsync(cancellationToken);
         var dto = ToReadDto(entity);
