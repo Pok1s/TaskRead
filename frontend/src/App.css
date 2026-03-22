@@ -1,0 +1,125 @@
+:root {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  line-height: 1.5;
+  color: #0f172a;
+  background: #f1f5f9;
+}
+
+body {
+  margin: 0;
+}
+
+.dashboard {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+}
+
+.dashboard__header h1 {
+  margin: 0 0 0.35rem;
+  font-size: 1.75rem;
+}
+
+.dashboard__hint {
+  margin: 0;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.dashboard__hint code {
+  font-size: 0.85em;
+  background: #e2e8f0;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+}
+
+.dashboard__form-section,
+.dashboard__list-section {
+  margin-top: 1.75rem;
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem 1.35rem;
+  box-shadow: 0 1px 3px rgb(15 23 42 / 8%);
+}
+
+.dashboard__form-section h2,
+.dashboard__list-section h2 {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+}
+
+.task-form label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.task-form__row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.task-form input[type='text'] {
+  flex: 1 1 200px;
+  min-width: 0;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.task-form button {
+  padding: 0.55rem 1.1rem;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.task-form button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.dashboard__error {
+  color: #b91c1c;
+  margin: 0.5rem 0 0;
+}
+
+.dashboard__empty {
+  color: #64748b;
+  margin: 0;
+}
+
+.task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.task-list__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.task-list__item:last-child {
+  border-bottom: none;
+}
+
+.task-list__name {
+  font-weight: 500;
+}
+
+.task-list__status {
+  font-size: 0.85rem;
+  color: #64748b;
+  white-space: nowrap;
+}

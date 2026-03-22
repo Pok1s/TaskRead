@@ -1,0 +1,19 @@
+# .NET
+**/bin/
+**/obj/
+**/*.user
+**/*.suo
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# Env (keep .env.example tracked if you add secrets template)
+frontend/.env.local
+
+# SQL Server / Edge — pliki bazy na hoście (folder w repo: tylko .gitkeep)
+docker/sql-data/*
+!docker/sql-data/.gitkeep
+
+# OS
+.DS_Store

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <title>Artefakt 05 — szablon PDF</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 900px; margin: 24px auto; padding: 0 16px; color: #111; }
+    h1 { font-size: 1.35rem; border-bottom: 2px solid #333; padding-bottom: 8px; }
+    h2 { font-size: 1.1rem; margin-top: 28px; }
+    .box { border: 2px dashed #999; min-height: 220px; margin: 12px 0; padding: 12px; background: #fafafa; page-break-inside: avoid; }
+    .hint { font-size: 0.9rem; color: #444; margin: 0 0 8px; }
+    @media print { .box { min-height: 180px; } }
+  </style>
+</head>
+<body>
+  <h1>Zadanie 05: Artefakt nr 5 — System gotowy na chmurę</h1>
+  <p><strong>Imię Nazwisko, numer albumu:</strong> _________________________</p>
+  <p>Wklej zrzuty ekranu do prostokątów poniżej, potem: <strong>Plik → Drukuj → Zapisz jako PDF</strong> (Safari/Chrome).</p>
+  <p>Nazwa pliku: <code>Artefakt05_Imie_Nazwisko_Twoj_numer_studenta.pdf</code></p>
+
+  <h2>5.1 — DTO: test zapisu i odczytu (build + Swagger lub curl)</h2>
+  <p class="hint">Screen: terminal <code>dotnet build</code> / <code>dotnet run</code>, oraz wynik POST + GET (np. <code>scripts/verify-api.sh</code>) lub Swagger.</p>
+  <div class="box">[Zrzut 5.1]</div>
+
+  <h2>5.2 — Trwałość po <code>docker compose down -v</code> i ponownym <code>up</code></h2>
+  <p class="hint">Screen: UI z zadaniami PRZED, terminal z <code>docker compose down -v</code>, potem <code>docker compose up -d</code>, UI PO — te same dane (dane w <code>./docker/sql-data</code>).</p>
+  <div class="box">[Zrzut 5.2]</div>
+
+  <h2>5.3 — Folder Migrations w backendzie</h2>
+  <p class="hint">Screen: Eksplorator / VS Code — <code>backend/CloudTasks.Api/Migrations/</code></p>
+  <div class="box">[Zrzut 5.3]</div>
+
+  <h2>5.4 — Dodanie zadania tylko z React (bez Swaggera)</h2>
+  <p class="hint">Screen: przeglądarka <code>npm run dev</code>, formularz dodawania.</p>
+  <div class="box">[Zrzut 5.4]</div>
+
+  <h2>5.5 — GitHub: <code>git push</code> + README na GitHubie</h2>
+  <p class="hint">Screen: terminal z wynikiem <code>git push</code> oraz strona README, np. <code>https://github.com/Twoja-Nazwa/TaskRead/blob/main/README.md</code></p>
+  <div class="box">[Zrzut 5.5a — git push]</div>
+  <div class="box">[Zrzut 5.5b — README w przeglądarce]</div>
+</body>
+</html>
