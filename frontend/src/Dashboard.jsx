@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
-const apiBase = import.meta.env.VITE_API_URL ?? 'http://localhost:5000'
+const apiBase = import.meta.env.VITE_API_URL ?? 'http://localhost:5050'
 
 async function fetchTasks(signal) {
   const res = await fetch(`${apiBase}/api/tasks`, { signal })

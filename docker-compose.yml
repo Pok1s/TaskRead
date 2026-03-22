@@ -7,13 +7,41 @@ services:
   db:
     image: mcr.microsoft.com/azure-sql-edge:latest
     container_name: cloud-db
+    restart: unless-stopped
     environment:
       SA_PASSWORD: "StrongPassword123!"
+      MSSQL_SA_PASSWORD: "StrongPassword123!"
       ACCEPT_EULA: "Y"
     ports:
       - "1433:1433"
     volumes:
       - ./docker/sql-data:/var/opt/mssql
+    networks:
+      - cloud-network
+    # Pierwszy start (szczególnie z pustym ./docker/sql-data) trwa często 30–60+ s.
+    # Ostrzeżenia o mssql.conf / localhost:1431 w logach są typowe — silnik jeszcze wstaje.
+    healthcheck:
+      test: ["CMD-SHELL", "ps aux | grep -q '[s]qlservr' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
+
+  api:
+    build:
+      context: ./backend/CloudTasks.Api
+      dockerfile: Dockerfile
+    container_name: cloud-api
+    restart: unless-stopped
+    ports:
+      # 5000 często zajęty na macOS (AirPlay) — host 5050
+      - "5050:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Server=db,1433;Database=CloudTasksDb;User Id=sa;Password=StrongPassword123!;TrustServerCertificate=True;"
+    depends_on:
+      db:
+        condition: service_healthy
     networks:
       - cloud-network
 

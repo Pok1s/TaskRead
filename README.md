@@ -18,7 +18,10 @@ Z katalogu repozytorium:
 
 ```bash
 docker compose up -d
+docker compose logs -f db
 ```
+
+Poczekaj, aż kontener będzie **healthy** (`docker compose ps` — kolumna STATUS) albo minie **ok. 30–60 s** przy pierwszym uruchomieniu. Nie przerywaj startu przez Ctrl+C w pierwszych sekundach — to normalne, że w logach widać ostrzeżenia (`mssql.conf`, połączenie z `localhost:1431`): usługi w kontenerze startują sekwencyjnie.
 
 SQL: `localhost:1433`, użytkownik `sa`, hasło `StrongPassword123!` (jak w `appsettings.json`).
 
@@ -34,8 +37,8 @@ dotnet restore
 dotnet run
 ```
 
-- API: `http://localhost:5000`
-- Swagger (tylko dev): `http://localhost:5000/swagger`
+- API (Docker Compose): `http://localhost:5050` — port **5050** (na macOS port **5000** bywa zajęty przez AirPlay).
+- Swagger (tylko dev): `http://localhost:5050/swagger`
 
 Migracje EF: folder `Migrations/`; przy starcie: `Database.Migrate()`.
 
@@ -47,7 +50,7 @@ npm install
 npm run dev
 ```
 
-Adres API: `frontend/.env` (lub `.env.development`) → `VITE_API_URL=http://localhost:5000`.
+Adres API: `frontend/.env` → `VITE_API_URL=http://localhost:5050` (zgodnie z `docker compose`).
 
 ### Test API z terminala (Artefakt 5.1 — zrzuty)
 
@@ -56,7 +59,7 @@ chmod +x scripts/verify-api.sh
 ./scripts/verify-api.sh
 ```
 
-Opcja: `API_URL=http://127.0.0.1:5000 ./scripts/verify-api.sh`
+Opcja: `API_URL=http://127.0.0.1:5050 ./scripts/verify-api.sh`
 
 ---
 

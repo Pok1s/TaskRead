@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Weryfikacja zapisu/odczytu API (Artefakt 5.1) — uruchom gdy działa `dotnet run` (backend) i `docker compose up -d` (baza).
 set -euo pipefail
-API="${API_URL:-http://localhost:5000}"
+API="${API_URL:-http://localhost:5050}"
 
 echo "=== POST /api/tasks ==="
 curl -sS -X POST "${API}/api/tasks" \

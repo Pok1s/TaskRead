@@ -3,9 +3,7 @@ using CloudTasks.Api.Dtos;
 using CloudTasks.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
 namespace CloudTasks.Api.Controllers;
-
 [ApiController]
 [Route("api/[controller]")]
 public class TasksController : ControllerBase
@@ -16,7 +14,6 @@ public class TasksController : ControllerBase
     {
         _context = context;
     }
-
     /// <summary>GET /api/tasks — lista wyłącznie jako DTO (bez encji EF).</summary>
     [HttpGet]
     [ProducesResponseType(typeof(IReadOnlyList<TaskReadDto>), StatusCodes.Status200OK)]
@@ -30,7 +27,6 @@ public class TasksController : ControllerBase
         IReadOnlyList<TaskReadDto> dto = items.Select(ToReadDto).ToList();
         return Ok(dto);
     }
-
     /// <summary>GET /api/tasks/{id} — pojedyncze zadanie jako DTO.</summary>
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(TaskReadDto), StatusCodes.Status200OK)]
@@ -43,7 +39,6 @@ public class TasksController : ControllerBase
 
         return Ok(ToReadDto(entity));
     }
-
     /// <summary>POST /api/tasks — walidacja body (DTO), zapis encji, odpowiedź jako DTO.</summary>
     [HttpPost]
     [ProducesResponseType(typeof(TaskReadDto), StatusCodes.Status201Created)]
@@ -52,25 +47,20 @@ public class TasksController : ControllerBase
     {
         if (!ModelState.IsValid)
             return ValidationProblem(ModelState);
-
         var name = body.Name.Trim();
         if (string.IsNullOrEmpty(name))
             return BadRequest("Name is required.");
-
         var entity = new TaskEntity
         {
             Name = name,
             IsCompleted = false,
             CreatedAt = DateTime.UtcNow
         };
-
         _context.Tasks.Add(entity);
         await _context.SaveChangesAsync(cancellationToken);
-
         var dto = ToReadDto(entity);
         return CreatedAtAction(nameof(GetById), new { id = entity.Id }, dto);
     }
-
     private static TaskReadDto ToReadDto(TaskEntity entity) => new()
     {
         Id = entity.Id,
