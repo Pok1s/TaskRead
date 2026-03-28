@@ -21,17 +21,15 @@ builder.Services.AddCors(o => o.AddPolicy("frontend", p => p
     .WithOrigins(
         "http://localhost:5173",
         "http://127.0.0.1:5173",
-        "http://localhost:3000")
+        "http://localhost:3000",
+        "https://gray-cliff-023fc1903.2.azurestaticapps.net")
     .AllowAnyHeader()
     .AllowAnyMethod()));
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseCors("frontend");
 
